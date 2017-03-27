@@ -26,11 +26,13 @@ public class SPPEpsilonP02P1 {
         boolean flag;
         
         do{        
-            menu();
-            flag = salida();
+            menu(); //manda a método menú
+            flag = salida(); //recibe el valor booleano
         } while (flag==false);
     }
     
+    
+    //método menú: muestra las opciones en pantalla
     public static void menu(){
         int option;
         boolean flag;            
@@ -47,9 +49,11 @@ public class SPPEpsilonP02P1 {
             System.out.println("3. Multiplicacion de matrices");
             System.out.println("4. Salir");
 
+            //variable que captura la opción elegida
             option = solicitarDatos();
             
-            if(option >=1  && option <= 3){
+            //estructura if/else para elegir opciones
+            if(option >= 1  && option <= 3){
                 crearMatrices(option);
                 flag = true;
             } else if(option == 4){
@@ -64,9 +68,12 @@ public class SPPEpsilonP02P1 {
     }
     
     
+    /* método crear matrices: relaciona a los métodos para crear matrices, asignarles datos
+    y realizar operaciones con ellas, según la opción que recibe del método menú*/
     public static void crearMatrices(int option){
         int m;
-        int[][] matrix;
+        int[][] matrix; // crea la matriz sobre la que se mostrara la respuesta de la operación realizada
+        
         //Se asigna la dimensión de la matriz
         System.out.println("\nIntroduzca la dimensión de la matriz cuadrada");
         m = verificarIntPositivo();
@@ -80,12 +87,13 @@ public class SPPEpsilonP02P1 {
         int[][]B = asignarValores(m);
         
         System.out.println("\n");
-        matrix = new int[m][m];
+        matrix = new int[m][m]; //se asigna dimensión a la matriz que resultará de la opción elegida
         switch (option) { //Menú switch donde con la opción elegida se realiza una operación con las matrices
 
             case 1:
                 //manda a método suma de matrices
                 matrix = sumaDeMatrices(A,B,m);
+                //se muestran los arrays
                 System.out.println("La suma de la matriz A");
                 mostrarArray(A);
                 System.out.println("\ny la B");
@@ -97,6 +105,7 @@ public class SPPEpsilonP02P1 {
             case 2:
                 //manda a método resta de matrices
                 matrix = restaDeMatrices(A,B,m);
+                //se muestran los arrays
                 System.out.println("La resta de la matriz A");
                 mostrarArray(A);
                 System.out.println("\ny la B");
@@ -108,6 +117,7 @@ public class SPPEpsilonP02P1 {
             case 3:
                 //manda a método multiplicacion de matrices
                 matrix = multiplicacionDeMatrices(A,B,m);
+                //se muestran los arrays
                 System.out.println("La multiplicacion de la matriz A");
                 mostrarArray(A);
                 System.out.println("\ny la B");
@@ -122,35 +132,40 @@ public class SPPEpsilonP02P1 {
      
     }
     
+    //Método solicitar datos: permite verificar que los datos sean correctos y los captura
     public static int solicitarDatos(){
         Scanner teclado = new Scanner (System.in);
         int x=0;
         boolean flag;
 
         do {
-            try {
+            try { //Intenta realizar las instrucciones
                 x = teclado.nextInt();
                 flag = true;
-            } catch (Exception ex) {
+            } catch (Exception ex) { //Evita que el programa falle en caso de error y muestra el error
                 System.out.println("\nIntroduzca un número entero válido");
                 System.out.println(ex);
                 flag = false;
-                teclado.next();
+                teclado.next(); //Limpia el buffer del teclado
             }
      
         } while (flag == false);
         
-        return x;
+        return x; //regresa el valor verificado
     }
     
+    /*Método verificar int positivo: verifica que el entero sea positivo para evitar introducir
+    valores negativos en el tamaño de la matriz*/
     public static int verificarIntPositivo(){
         boolean flag;
         int x;
         
+        //Ciclo do while: ejecuta al menos una vez las instrucciones en do, y evalúa si es cierto en while
         do {
             x = solicitarDatos();
-            if (x<1) {
-                System.out.println("Introduzca un entero positivo válido");
+            //Evalúa si la x es menor a uno, y si lo es, asigna flag=false para repetir el ciclo
+            if (x < 1) {
+                System.out.println("Introduzca un entero positivo(no hay longitudes negativas  o nulas de matrices)");
                 flag=false;
             } else{
               flag=true;  
@@ -158,22 +173,28 @@ public class SPPEpsilonP02P1 {
             
         } while (flag==false);
     
-        return x;
+        return x; //regresa el valor comprobado
     }    
     
+    //Método asignar valores: asigna los valores de una matriz con un ciclo for
     public static int[][] asignarValores(int m){
+        //Crea el array con el tamaño introducido por el usuario anteriormente
         int[][] matrix = new int[m][m];
         
+        //Ciclo for: Nos desplaza en las filas del array
         for (int i = 0; i < m; i++) {
+            //Ciclo for: Nos desplzaza en las columnas del array
             for (int j = 0; j < m; j++) {
                 System.out.println("Introduzca el valor de la posición "+i+","+j);
+                //Asigna el valor del array en la posición i, j
                 matrix[i][j] = solicitarDatos();
             }
         }
  
-        return matrix;
+        return matrix; //regresa la matriz a la que se le asignaron valores
     }
     
+    //Método suma de matrices: regresa una matriz que es suma de otras 2 que llegan al método
     public static int[][] sumaDeMatrices(int[][]A, int[][]B, int m){
         
         int[][] S = new int[m][m];
@@ -184,9 +205,10 @@ public class SPPEpsilonP02P1 {
             }
         }
 
-        return S;
+        return S; //regresa el array que es suma de las matrices
     }
     
+    //Método suma de matrices: regresa una matriz que es resta de otras 2 que llegan al método
     public static int[][] restaDeMatrices(int[][]A, int[][]B, int m){
         
         int[][] R = new int[m][m];
@@ -196,21 +218,24 @@ public class SPPEpsilonP02P1 {
                 R[i][j] = A[i][j] - B[i][j];
             }
         }
-        return R;
+        return R; //regresa el array que es resta de las matrices
     }
     
+    //Método multiplicación de matrices: regresa una matriz que es producto matricial de AXB
     public static int[][] multiplicacionDeMatrices(int[][]A, int[][]B, int m){
         int[][]M = new int[m][m];
         
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < m; j++) {
+                /*Recorre los valores de columna en A y de fila en B para multiplicar
+                cada elemento de la fila i de la matriz A por cada elemento de la columa j de la matriz B*/
                 for (int k = 0; k < m; k++) {
                     M[i][j] += A[i][k]*B[k][j];
                 }    
             }
         }
         
-        return M;
+        return M; //regresa el array que es multiplicación de las matrices
     }
     
     //Método mostrar Array: muestra en pantalla la matriz creada
